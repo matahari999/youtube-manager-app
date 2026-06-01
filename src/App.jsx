@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 // ═══════════════════════════════════════════════════════════════
 //  GEMINI API  —  엔진은 Claude 메타프롬프트, 호출은 Gemini REST
@@ -933,9 +933,55 @@ const TABS = [
   { id:"trans",   icon:"🌍", label:"다국어 현지화", sub:"5개국어 통 복붙" },
 ];
 
+function LoginScreen({ onLogin }) {
+  const [pwd, setPwd] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (pwd === "101621") {
+      onLogin();
+    } else {
+      alert("비밀번호가 틀렸습니다.");
+    }
+  };
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-anthropic-light px-4">
+      <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-anthropic-light-gray shadow-sm p-6 max-w-sm w-full space-y-5">
+        <div className="text-center">
+          <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-red-700 to-red-950 flex items-center justify-center text-xl mb-3">🎖</div>
+          <h2 className="text-xl font-heading font-semibold text-anthropic-dark">관리자 로그인</h2>
+          <p className="text-xs text-anthropic-mid-gray mt-1">이 웹앱은 관리자 전용입니다.</p>
+        </div>
+        <div>
+          <input type="password" value={pwd} onChange={e=>setPwd(e.target.value)} 
+            className="w-full bg-anthropic-light-gray/50 text-anthropic-dark text-sm rounded-xl px-4 py-3 border border-anthropic-light-gray focus:outline-none focus:border-anthropic-mid-gray placeholder-zinc-600 text-center tracking-widest" 
+            placeholder="비밀번호 입력" autoFocus />
+        </div>
+        <button type="submit" disabled={!pwd}
+          className="w-full py-3 rounded-xl bg-anthropic-orange hover:bg-anthropic-orange/90 disabled:bg-anthropic-light-gray disabled:text-anthropic-mid-gray text-white text-sm font-semibold transition-all">
+          접속하기
+        </button>
+      </form>
+    </div>
+  );
+}
+
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [tab, setTab] = useState("comment");
   const [apiKey, setApiKey] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("adminAuth") === "101621") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  if (!isLoggedIn) {
+    return <LoginScreen onLogin={() => {
+      localStorage.setItem("adminAuth", "101621");
+      setIsLoggedIn(true);
+    }}/>;
+  }
 
   return (
     <div className="min-h-screen bg-anthropic-light text-anthropic-dark font-heading font-medium" >
