@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-anthropic-light text-anthropic-dark font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-semibold;
+  }
+}
+
+@layer utilities {
+  .btn-primary {
+    @apply bg-anthropic-orange text-anthropic-light hover:bg-opacity-90 transition-all font-heading font-medium rounded-xl px-4 py-2 flex items-center justify-center gap-2;
+  }
+  .btn-secondary {
+    @apply bg-anthropic-light-gray text-anthropic-dark hover:bg-anthropic-mid-gray/50 transition-all font-heading font-medium rounded-xl px-4 py-2 flex items-center justify-center gap-2 border border-anthropic-mid-gray/30;
+  }
+  .card {
+    @apply bg-white rounded-2xl border border-anthropic-light-gray shadow-sm p-4;
+  }
+  .input-field {
+    @apply w-full bg-white text-anthropic-dark rounded-xl p-3 border border-anthropic-light-gray focus:outline-none focus:border-anthropic-blue focus:ring-1 focus:ring-anthropic-blue transition-all resize-none placeholder-anthropic-mid-gray;
+  }
+  .label-text {
+    @apply font-heading text-[10px] font-bold text-anthropic-mid-gray uppercase tracking-widest mb-2;
+  }
+}
